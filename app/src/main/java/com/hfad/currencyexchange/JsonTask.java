@@ -1,4 +1,4 @@
-package com.hfad.jsontutorial;
+package com.hfad.currencyexchange;
 
 import android.os.AsyncTask;
 import android.util.Log;

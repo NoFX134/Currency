@@ -1,4 +1,4 @@
-package com.hfad.jsontutorial;
+package com.hfad.currencyexchange;
 
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -24,7 +24,7 @@ public class JSONUtils {
     protected static String JsonFromFile;
     protected final static String APP_PREFERENCES = "appsettings";
     protected final static String APP_PREFERENCES_JSON = "JSONCBR";
-    protected final static String JSON_URL = "https://www.cbr-xml-daily.ru//archive//2022//01//11//daily_json.js";
+    protected final static String JSON_URL = "https://www.cbr-xml-daily.ru/daily_json.js";
     private static final String TAG = JSONUtils.class.getSimpleName();
 
     //создание ArrayList JSONobject c данными о валютах
@@ -46,7 +46,7 @@ public class JSONUtils {
         if (jsonRoot != null) {
             String dateAndTime = null;
             try {
-                dateAndTime = jsonRoot.getString("Date");
+                dateAndTime = jsonRoot.getString("Timestamp");
             } catch (JSONException ex) {
                 Log.e(TAG, "Исключение", ex);
             }
@@ -60,7 +60,7 @@ public class JSONUtils {
             }
             return new SimpleDateFormat("dd MMMM yyyy", new Locale("ru")).format(dateD);
         }
-       return "";
+        return "";
     }
 
     //Соединения с сайтом, скачивание и запись JSON в строку

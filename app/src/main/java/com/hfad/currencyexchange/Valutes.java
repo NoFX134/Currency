@@ -1,4 +1,4 @@
-package com.hfad.jsontutorial;
+package com.hfad.currencyexchange;
 
 public class Valutes {
     private String charCode;

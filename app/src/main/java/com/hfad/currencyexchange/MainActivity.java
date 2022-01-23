@@ -1,4 +1,4 @@
-package com.hfad.jsontutorial;
+package com.hfad.currencyexchange;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
@@ -36,6 +37,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (!checkInternetConnection()) Toast.makeText(this, "Нет интернет соединения",
+                Toast.LENGTH_LONG).show();
         setContentView(R.layout.activity_main);
         mySharedPreferences = getSharedPreferences(JSONUtils.APP_PREFERENCES, Context.MODE_PRIVATE);
         Button button = (Button) findViewById(R.id.buttonCurrensyConverter);
@@ -50,9 +53,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         recyclerView = findViewById(R.id.list);
         adapter = new ValuteAdapter(this, valutes);
         recyclerView.setAdapter(adapter);
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, RecyclerView.VERTICAL);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this,
+                RecyclerView.VERTICAL);
         Context context=this;
-        dividerItemDecoration.setDrawable(ResourcesCompat.getDrawable(context.getResources(), R.drawable.divider_drawable, null));
+        dividerItemDecoration.setDrawable(ResourcesCompat.getDrawable(context.getResources(),
+                R.drawable.divider_drawable, null));
         recyclerView.addItemDecoration(dividerItemDecoration);
         periodicUpdate();
     }
@@ -71,6 +76,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         boolean isNetworkOk = checkInternetConnection();
+        if (!isNetworkOk) Toast.makeText(this, "Нет интернет соединения",
+                Toast.LENGTH_LONG).show();
         if (id == R.id.action_refresh && isNetworkOk) {
             JSONUtils.downloadAndWriteJson();
             JSONUtils.writeJsonInFile();
@@ -94,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
             setTitle(getString(R.string.mainactivityTitle) + " " + JSONUtils.createDate());
-            //adapter.notifyDataSetChanged();
+            adapter.notifyDataSetChanged();
             recyclerView.setAdapter(adapter);
         }
 
@@ -177,6 +184,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         }
                         runOnUiThread(() -> {
                             {
+                                if (!checkInternetConnection()) Toast.makeText
+                                        (MainActivity.this, "Нет интернет соединения",
+                                                Toast.LENGTH_LONG).show();
                                 if (checkInternetConnection()) {
                                     JSONUtils.downloadAndWriteJson();
                                     JSONUtils.writeJsonInFile();
@@ -190,7 +200,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                     valutes.clear();
                                     for (int i = 0; i < JSONUtils.jsArr.size(); i++) {
                                         try {
-                                            valutes.add(new Valutes(JSONUtils.jsArr.get(i).getString("CharCode"),
+                                            valutes.add(new Valutes(JSONUtils.jsArr.get(i)
+                                                    .getString("CharCode"),
                                                     JSONUtils.jsArr.get(i).getInt("Nominal"),
                                                     JSONUtils.jsArr.get(i).getString("Name"),
                                                     JSONUtils.jsArr.get(i).getDouble("Value")));
@@ -200,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                         }
                                     }
                                     setTitle(getString(R.string.mainactivityTitle) + " " + JSONUtils.createDate());
-                                    //adapter.notifyDataSetChanged();
+                                    adapter.notifyDataSetChanged();
                                     recyclerView.setAdapter(adapter);
                                 }
                             }
