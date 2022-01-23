@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Список валют</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <!-- Strings -->
+    <string name="currency">Валюта</string>
+    <string name="сonverter">Конвертер Валют</string>
+    <string name="nominalAndName">Номинал и название</string>
+    <string name="exchangeRateRUB">Курс к рублю</string>
+    <string name="editText">Введите значение</string>
+    <string name="Refresh">Refresh</string>
+    <string name="exchangeRate">Список валют</string>
+    <string name="currencyEditValueSize">Введенное значение слишком большое</string>
+    <string name="mainactivityTitle">Курс валют на </string>
+    <string name="mainactivityTitle2">Конвертер валют</string>
+
+</resources>
